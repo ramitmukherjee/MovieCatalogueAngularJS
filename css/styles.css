@@ -1,0 +1,19 @@
+#show-hide {
+
+    text-decoration: underline;
+    cursor: pointer;
+    color: orange;
+    float:right;
+    
+
+}
+
+th:hover {
+    background-color:#F0F0F0;
+    cursor: pointer;
+}
+
+
+.ng-cloak {
+    display: none !important;
+}  

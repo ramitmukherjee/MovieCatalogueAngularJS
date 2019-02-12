@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+			<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+			<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+			<link rel="stylesheet" href="css/styles.css">
+    </head>
+    <body ng-app="movieAnaysisApp" ng-controller="moviewAnalysisController as ctrl">
+		<nav class="navbar navbar-dark bg-dark">
+		    <a class="navbar-brand" href="#">Movies</a>
+		    <form class="form-inline">
+					<input class="form-control mr-sm-2" type="search" ng-model="ctrl.selectedLanguage"
+						placeholder="Search (by language)" aria-label="Search">
+					<input class="form-control mr-sm-2" type="search" ng-model="ctrl.selectedGenre"
+						placeholder="Search (by genre)" aria-label="Search">
+					<input class="form-control mr-sm-2" type="search" ng-model="ctrl.selectedYear"
+						placeholder="Search (by year)" aria-label="Search">
+					<input class="form-control mr-sm-2" type="search" ng-model="ctrl.selectedCountry"
+						placeholder="Search (by country)" aria-label="Search">
+					<input class="form-control mr-sm-2" type="search" ng-model="ctrl.selectedBudget"
+						placeholder="Search (by budget)" aria-label="Search">
+					
+			 </form>
+		</nav>
+		<section class="container-fluid ng-cloak">
+			<h1>Movie Analysis App</h1>
+
+			<div class="main-content" ng-show="ctrl.movies.length">
+				<div>
+					<span id="show-hide">Show/Hide Columns</span>
+					<table class="table table-bordered table-striped table-sm">
+						<thead>
+							<tr>
+								<th scope="col">#</th>
+								<th scope="col" ng-click="ctrl.sortByProperty('movie_title')">
+									Movie Title <i class="fa fa-fw fa-sort"></i>
+								</th>
+								<th scope="col">
+									<select class="form-control"
+										ng-model="ctrl.selectedLanguage"
+										ng-options="language for language in ctrl.language">
+									</select>
+									Language
+								</th>
+								<th scope="col">
+										
+										<select class="form-control"
+												ng-model="ctrl.selectedGenre" ng-options="genre for genre in ctrl.genres"></select>
+										<span>Genres</span>
+								</th>
+								<th scope="col">
+									<select class="form-control"
+										ng-model="ctrl.selectedYear" ng-options="year for year in ctrl.year"></select>
+										Year
+								</th>
+								<th scope="col" ng-click="ctrl.sortByProperty('content_rating')">
+									Content Rating <i class="fa fa-fw fa-sort"></i>
+								</th>
+								<th scope="col">
+									<select class="form-control"
+											ng-model="ctrl.selectedCountry" ng-options="country for country in ctrl.country"></select>
+									Country
+								</th>
+								<th scope="col" ng-click="ctrl.sortByProperty('actor_1_name')">
+									Actor 1 <i class="fa fa-fw fa-sort"></i>
+								</th>
+								<th scope="col" ng-click="ctrl.sortByProperty('actor_2_name')">
+									Actor 2 <i class="fa fa-fw fa-sort"></i>
+								</th>
+								<th scope="col" ng-click="ctrl.sortByProperty('director_name')">
+									Director <i class="fa fa-fw fa-sort"></i>
+								</th>
+								<th scope="col">
+									<select class="form-control"
+										ng-model="ctrl.selectedBudget" ng-options="budget for budget in ctrl.budget"></select>
+									Budget
+								</th>
+								<th scope="col">Plot Keywords</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="movie in ctrl.filteredMovies = ( ctrl.movies | filter :
+							    {genres: ctrl.selectedGenre, language: ctrl.selectedLanguage,
+									budget: ctrl.selectedBudget, country: ctrl.selectedCountry, year: ctrl.selectedYear})
+									| orderBy : ctrl.sortProperty : ctrl.descending
+									| limitTo : ctrl.limit : ctrl.start">
+								<th scope="row"><span ng-bind="(ctrl.currentPage) * ctrl.limit + $index + 1"></span></th>
+								<td><a ng-href="{{movie.movie_imdb_link}}" target="_blank">{{movie.movie_title}}</a></td>
+								<td>{{movie.language}}</td>
+								<td>{{movie.genres | pipeFilter}}</td>
+								<td>{{movie.title_year}}</td>
+								<td>{{movie.content_rating}}</td>
+								<td>{{movie.country}}</td>
+								<td>{{movie.actor_1_name}}</td>
+								<td>{{movie.actor_2_name}}</td>
+								<td>{{movie.director_name}}</td>
+								<td>{{movie.budget}}</td>
+								<td>{{movie.plot_keywords | pipeFilter}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>  	
+				<nav>
+					<ul class="pagination">
+						<li class="page-item"><a class="page-link" ng-click="ctrl.goToPage($event, 'first')">First</a></li>
+						<li class="page-item"><a class="page-link" ng-click="ctrl.goToPage($event, 'previous')">Previous</a></li>
+						<li class="page-item"><input type="text" ng-model="ctrl.currenPageDisplay" style="width: 3rem;"
+							    class="form-control" ng-keyup="ctrl.goToPage($event, ctrl.currenPageDisplay)"></li>
+						<li class="page-item"><a class="page-link disabled">/ {{ctrl.lastPage}}</a></li>
+						<li class="page-item"><a class="page-link" ng-click="ctrl.goToPage($event, 'next')">Next</a></li>
+						<li class="page-item"><a class="page-link" ng-click="ctrl.goToPage($event, 'last')">Last</a></li>
+					</ul>
+				</nav>
+				
+			</div>
+      
+		</section>
+        
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.7/angular.min.js"></script>		
+		<script src="js/app/main.js"></script>
+
+	</body>
+</html>
