@@ -24,7 +24,7 @@
 		</nav>
 		<section class="container-fluid ng-cloak">
 			<h1>Movie Analysis App</h1>
-
+			
 			<div class="main-content" ng-show="ctrl.movies.length">
 				<div>
 					<span id="show-hide">Show/Hide Columns</span>
@@ -104,8 +104,8 @@
 					<ul class="pagination">
 						<li class="page-item"><a class="page-link" ng-click="ctrl.goToPage($event, 'first')">First</a></li>
 						<li class="page-item"><a class="page-link" ng-click="ctrl.goToPage($event, 'previous')">Previous</a></li>
-						<li class="page-item"><input type="text" ng-model="ctrl.currenPageDisplay" style="width: 3rem;"
-							    class="form-control" ng-keyup="ctrl.goToPage($event, ctrl.currenPageDisplay)"></li>
+						<li class="page-item"><input type="text" ng-model="ctrl.currentPageDisplay" style="width: 3rem;"
+							    class="form-control" ng-blur="ctrl.goToPage($event, ctrl.currentPageDisplay)"></li>
 						<li class="page-item"><a class="page-link disabled">/ {{ctrl.lastPage}}</a></li>
 						<li class="page-item"><a class="page-link" ng-click="ctrl.goToPage($event, 'next')">Next</a></li>
 						<li class="page-item"><a class="page-link" ng-click="ctrl.goToPage($event, 'last')">Last</a></li>

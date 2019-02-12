@@ -5,7 +5,8 @@ angular.module('movieAnaysisApp', [])
      .controller('moviewAnalysisController', ['$scope', 'moviewService', function ($scope, moviewService) {
 	
     console.log('Main Controller Loaded.');
-    
+		
+		
         this.limit = 10;
         this.start = 0;
         this.currentPage = 0;
@@ -85,6 +86,13 @@ angular.module('movieAnaysisApp', [])
 
         this.goToPage = function (event, page) {
             debugger
+			
+			if (page == null || page == "") {
+				this.currentPage = 0;
+				this.currentPageDisplay = this.currentPage + 1;
+				return
+			}
+			
             if (page != null && event != null && event.type == 'click') {
                 switch (page) {
                     case 'next':
@@ -102,20 +110,22 @@ angular.module('movieAnaysisApp', [])
                     case 'last':
                        this.currentPage = Math.floor(this.filteredMovies.length / this.limit);
                        this.start = this.currentPage * this.limit;
-                       this.currenPageDisplay = this.currentPage + 1;
+                       this.currentPageDisplay = this.currentPage + 1;
                        break;
                     case 'first':
                        this.currentPage = 0;
                        this.start = 0;
                        break;
                 }
-                this.currenPageDisplay = this.currentPage + 1;
-            } else if (page != null && event != null && event.type == "keyup") {
+                this.currentPageDisplay = this.currentPage + 1;
+            } else if (page != null && event != null && event.type == "blur") {
                 let pageNumber = Number(page);
                 if (!isNaN(pageNumber) && pageNumber > 0 && pageNumber <= this.lastPage) {
                     this.currentPage = pageNumber - 1;
                     this.start = this.currentPage * this.limit;
-                }
+                } else {
+					this.currentPageDisplay = this.currentPage + 1;
+				}
             }
         }
 	
